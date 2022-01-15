@@ -1,5 +1,7 @@
 # rethink-backend-orders
 
+[![CircleCI](https://circleci.com/gh/mariah-zm/rethink-backend-orders.svg?style=svg&circle-token=82d005c2718e74477c5e65eca1bcffdd320a5a45)](https://app.circleci.com/pipelines/github/mariah-zm/rethink-backend-orders)
+
 The Orders microservice for the RETHINK Backend.
 
 To build this project:
