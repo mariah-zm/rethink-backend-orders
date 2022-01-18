@@ -14,10 +14,7 @@ spring:
       matching-strategy: ant-path-matcher
 
 server:
-  port : 13000
-  servlet:
-    contextPath: "/order"
+  port : 13001
 
 database:
   url: ${DATABASE_URL}
-

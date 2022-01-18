@@ -1,4 +1,4 @@
-package com.rethink.inventory.config;
+package com.rethink.orders.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.rethink.inventory.repositories")
+@EnableJpaRepositories(basePackages = "com.rethink.orders.repositories")
 public class DataSourceConfig {
 
     @Value("${database.url}")

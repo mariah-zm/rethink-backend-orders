@@ -1,18 +1,21 @@
 package com.rethink.orders.controllers;
 
-import com.rethink.orders.models.Product;
+import com.rethink.orders.models.enums.OrderStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/order")
 @RestController
 public class OrderController {
 
-    @GetMapping("/{supplierId}")
-    public @ResponseBody Product getProduct(@PathVariable int productId) {
-        // TODO Implement method
-        return null;
+    @GetMapping("/{orderId}/status")
+    public @ResponseBody
+    OrderStatus getStatus(@PathVariable Integer orderId) {
+        return OrderStatus.RECEIVED;
+    }
+
+    @PostMapping("/{orderId}/status")
+    public @ResponseBody String updateStatus(@PathVariable Integer orderId, @RequestBody OrderStatus orderStatus) {
+        return "Status updated";
     }
 
 }

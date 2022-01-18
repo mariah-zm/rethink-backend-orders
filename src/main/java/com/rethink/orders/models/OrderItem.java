@@ -4,19 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "supplier")
-public class Supplier {
+@Table(name = "order_item")
+public class OrderItem {
 
-    @Id
-    private Integer id;
-    private String name;
+    @EmbeddedId
+    private OrderItemId id;
+    private int quantity;
+    private double unitCost;
+    private double total_cost;
 
 }

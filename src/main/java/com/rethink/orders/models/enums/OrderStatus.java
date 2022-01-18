@@ -1,4 +1,10 @@
 package com.rethink.orders.models.enums;
 
-public class OrderStatus {
+public enum OrderStatus {
+
+    RECEIVED,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
+
 }
