@@ -1,5 +1,6 @@
 package com.rethink.orders.models;
 
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,10 @@ public class OrderItem {
     @EmbeddedId
     private OrderItemId id;
     private int quantity;
-    private double unitCost;
-    private double total_cost;
+
+    public OrderItem(Long productId, Integer orderId, int quantity) {
+        this.id = new OrderItemId(productId, orderId);
+        this.quantity = quantity;
+    }
 
 }

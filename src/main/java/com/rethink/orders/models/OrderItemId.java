@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Embeddable
 public class OrderItemId implements Serializable {
 
-    private Integer orderId;
+    private Long orderId;
     private Integer productId;
 
 }
