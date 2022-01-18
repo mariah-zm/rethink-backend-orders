@@ -1,29 +1,34 @@
 package com.rethink.orders.models;
 
 import com.rethink.orders.models.enums.OrderStatus;
-import lombok.AllArgsConstructor;
+import com.rethink.orders.models.enums.OrderStatusEnumType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "order")
+@TypeDef(name = "order_status", typeClass = OrderStatusEnumType.class)
+@Table(name = "\"order\"")
 public class Order {
 
     @Id
-    private Integer id;
+    private Long id;
     private Integer supplierId;
     private LocalDateTime orderDate;
-    private LocalDate expectedArrival;
-    private OrderStatus status;
-    private double cost;
 
+    @Type(type = "order_status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    public Order(Long id) {
+        this.id = id;
+    }
 }

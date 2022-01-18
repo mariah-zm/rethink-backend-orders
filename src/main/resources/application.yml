@@ -18,3 +18,20 @@ server:
 
 database:
   url: ${DATABASE_URL}
+
+supply-api:
+  url: "https://rethink-supplier.herokuapp.com"
+  endpoints:
+    order: "/order"
+    orderline: "/orderline/"
+    send-order: "/send_order"
+    product: "/product/"
+    delivery: "/delivery/"
+  auth:
+    username: ${SUPPLY_API_USERNAME}
+    token: ${SUPPLY_API_TOKEN}
+
+inventory-service:
+  url: "http://localhost:13000"
+  endpoints:
+    lowstock: "/stock/low"
