@@ -32,6 +32,6 @@ supply-api:
     token: ${SUPPLY_API_TOKEN}
 
 inventory-service:
-  url: "http://localhost:13000"
+  url: "https://rethink-backend-inventory.herokuapp.com"
   endpoints:
     lowstock: "/stock/low"

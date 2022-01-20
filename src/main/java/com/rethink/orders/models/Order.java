@@ -10,6 +10,7 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,6 +28,9 @@ public class Order {
     @Type(type = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @Transient
+    private List<OrderItem> items;
 
     public Order(Long id) {
         this.id = id;
