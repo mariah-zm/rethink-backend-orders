@@ -1,6 +1,7 @@
 package com.rethink.orders.controllers;
 
 import com.rethink.orders.exceptions.OrderFailedException;
+import com.rethink.orders.exceptions.OrderNotFoundException;
 import com.rethink.orders.models.Order;
 import com.rethink.orders.models.enums.OrderStatus;
 import com.rethink.orders.services.InventoryService;
@@ -23,15 +24,34 @@ public class OrderController {
         this.inventoryService = inventoryService;
     }
 
+    @GetMapping("/{orderId}")
+    public @ResponseBody
+    Order getOrder(@PathVariable Long orderId) {
+        try {
+            return orderService.getOrder(orderId);
+        } catch (OrderNotFoundException e) {
+            return null;
+        }
+    }
+
     @GetMapping("/{orderId}/status")
     public @ResponseBody
-    OrderStatus getStatus(@PathVariable Integer orderId) {
-        return OrderStatus.received;
+    OrderStatus getStatus(@PathVariable Long orderId) {
+        try {
+            return orderService.getOrderStatus(orderId);
+        } catch (OrderNotFoundException e) {
+            return OrderStatus.cancelled;
+        }
     }
 
     @PostMapping("/{orderId}/status")
-    public @ResponseBody String updateStatus(@PathVariable Integer orderId, @RequestBody OrderStatus orderStatus) {
-        return "Status updated";
+    public @ResponseBody String updateStatus(@PathVariable Long orderId, @RequestParam OrderStatus orderStatus) {
+        try {
+            orderService.updateOrderStatus(orderId, orderStatus);
+            return "Status updated";
+        } catch (OrderNotFoundException e) {
+            return "Could not update status. " + e.getMessage();
+        }
     }
 
     @PostMapping("")

@@ -1,6 +1,7 @@
 package com.rethink.orders.services;
 
 import com.rethink.orders.exceptions.OrderFailedException;
+import com.rethink.orders.exceptions.OrderNotFoundException;
 import com.rethink.orders.models.Order;
 import com.rethink.orders.models.OrderItem;
 import com.rethink.orders.models.enums.OrderStatus;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -25,6 +26,30 @@ public class OrderServiceImpl implements OrderService {
         this.requestService = requestService;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+    }
+
+    @Override
+    public OrderStatus getOrderStatus(Long orderId) throws OrderNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+
+        if (order.isPresent()) {
+            return order.get().getStatus();
+        } else {
+            throw new OrderNotFoundException("Could not find order with id " + orderId);
+        }
+    }
+
+    @Override
+    public void updateOrderStatus(Long orderId, OrderStatus status) throws OrderNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+
+        if (order.isPresent()) {
+            Order actualOrder = order.get();
+            actualOrder.setStatus(status);
+            orderRepository.save(actualOrder);
+        } else {
+            throw new OrderNotFoundException("Could not find order with id " + orderId);
+        }
     }
 
     @Override
@@ -52,6 +77,20 @@ public class OrderServiceImpl implements OrderService {
             return order;
         } catch (IOException e) {
             throw new OrderFailedException("Order creation unsuccessful");
+        }
+    }
+
+    @Override
+    public Order getOrder(Long orderId) throws OrderNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+
+        if (order.isPresent()) {
+            Order actualOrder = order.get();
+            List<OrderItem> items = orderItemRepository.findAllByIdOrderId(orderId);
+            actualOrder.setItems(items);
+            return actualOrder;
+        } else {
+            throw new OrderNotFoundException("Could not find order with id " + orderId);
         }
     }
 
